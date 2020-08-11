@@ -37,6 +37,12 @@ body {
   margin-top: 20px;
 }
 
+.footer {
+  border-top-color: #e7e7e7;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {
