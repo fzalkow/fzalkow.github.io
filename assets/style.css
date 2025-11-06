@@ -1,0 +1,74 @@
+/* app.css */
+:root {
+  --spacing: 1rem;
+  --bg: #f7f7f9;
+  --text: #1a1a1a;
+  --muted: #555;
+  --accent: #0a66c2;
+}
+
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.hero-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing);
+}
+
+.hero {
+  background: var(--bg);
+  padding: calc(var(--spacing) * 3) 0;
+  border: 1px solid #e6e6e6;
+}
+
+.hero-inner {
+  display: grid;
+  gap: calc(var(--spacing) * 2);
+  align-items: center;
+}
+
+.hero-media img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hero h1 {
+  margin: 0 0 var(--spacing);
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+}
+
+.hero .tagline {
+  color: var(--muted);
+  margin: 0 0 calc(var(--spacing) * 1.5);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing);
+}
+.cta a {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--accent);
+  background: #fff;
+}
+.cta a:hover { border-color: var(--accent); }
+
+@media (min-width: 768px) {
+  .hero-inner {
+    grid-template-columns: 160px 1fr;
+  }
+}

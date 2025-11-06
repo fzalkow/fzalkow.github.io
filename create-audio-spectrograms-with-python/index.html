@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Audio Spectrograms with Python | Frank Zalkow</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS (en)" hreflang="en" href="../rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS (de)" hreflang="de" href="../de/rss.xml">
+<link rel="canonical" href="https://www.frank-zalkow.de/create-audio-spectrograms-with-python/">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+body {font-size: 18px;font-family: 'Inter', sans-serif;}
+h1 a {color: inherit; text-decoration: none;}
+h1 a:visited {color: inherit;}
+h1 a:hover {color: inherit;}
+.publication a.btn {padding: 2px 5px; margin-right: 5px;}
+</style>
+<meta name="author" content="Frank Zalkow">
+<meta property="og:site_name" content="Frank Zalkow">
+<meta property="og:title" content="Create Audio Spectrograms with Python">
+<meta property="og:url" content="https://www.frank-zalkow.de/create-audio-spectrograms-with-python/">
+<meta property="og:description" content="Warning! The information on this page is heavily outdated. For a better way to visualize log-frequency spectrograms in Python, I recommend the excellent notebooks on Fundamentals of Music Processing, ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2013-07-28T00:00:00+02:00">
+<link rel="alternate" hreflang="de" href="../de/create-audio-spectrograms-with-python/">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://www.frank-zalkow.de/">
+
+                <span id="blog-title">Frank Zalkow</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../about-me/">About Me</a>
+                </li>
+<li>
+<a href="../publications/">Publications</a>
+                </li>
+<li>
+<a href="../teaching/">Teaching</a>
+                </li>
+<li>
+<a href="../contact/">Contact</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+                        </li>
+<li><a href="https://www.linkedin.com/in/frank-zalkow" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="https://github.com/fzalkow" target="_blank"><i class="fa fa-github"></i></a></li>
+                        <li><a href="https://stackoverflow.com/users/2812618/frank-zalkow" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+                        
+            <li><a href="https://www.frank-zalkow.de/de/" rel="alternate" hreflang="de">Deutsch</a></li>
+
+                    
+                
+                
+
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Create Audio Spectrograms with Python</a></h1>
+
+        
+        <div class="metadata posttranslations translations">
+            <h3 class="posttranslations-intro">Also available in:</h3>
+                <p><a href="../de/create-audio-spectrograms-with-python/" rel="alternate" hreflang="de">Deutsch</a></p>
+        </div>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div class="alert alert-warning">
+  <strong>Warning!</strong> The information on this page is heavily outdated. For a better way to visualize log-frequency spectrograms in Python, I recommend the excellent notebooks on <a href="https://www.audiolabs-erlangen.de/FMP">Fundamentals of Music Processing</a>, in particular the notebook on <a href="https://www.audiolabs-erlangen.de/resources/MIR/FMP/C3/C3S1_SpecLogFreq-Chromagram.html">log-frequency spectrograms</a>.
+</div>
+
+<p>Here it's about creating spectrograms from WAVE files with Python, including decibel converted values and logarithmic scaled frequency axis. It uses NumPy, SciPy and matplotlib. Since this is a old code snippet, it requires a rather old version of NumPy, e.g. 1.10.4. If you are using Anaconda, you can create a working environment with <code>conda create -n spec python=3 numpy==1.10.4 scipy matplotlib</code>. If you have comments, improvements or find it useful, please <a href="../en/about-me.html">conctact me</a>.</p>
+<p>An example: the spectrogram of the first 10 seconds of the song »Die Schnitzelbank« (sung by the Manhattan Quartett, likely in the 1920s, source: <a href="http://memory.loc.gov/cgi-bin/query/r?ammem/papr:@filreq(@field(NUMBER+@band(edrs+57007r))+@field(COLLID+edison))">»American Memory« from the Libary of Congress, Washington, D.C.</a>).</p>
+<div style="text-align:center">
+  <audio controls><source src="../media/schnitzel.mp3" type="audio/mpeg">
+   Your browser does not support the audio tag.
+  </source></audio>
+</div>
+
+<!-- ![Frank](/images/frank_circle.jpg) -->
+<div style="text-align:center">
+  <a href="../images/schnitzelspec.jpg">
+    <img src="../images/schnitzelspec_small.jpg"></a>
+</div>
+
+<div class="code"><pre class="code literal-block"><span class="c1">#coding: utf-8</span>
+<span class="sd">""" This work is licensed under a Creative Commons Attribution 3.0 Unported License.</span>
+<span class="sd">    Frank Zalkow, 2012-2013 """</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.io.wavfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wav</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.lib</span><span class="w"> </span><span class="kn">import</span> <span class="n">stride_tricks</span>
+
+<span class="sd">""" short time fourier transform of audio signal """</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">stft</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">frameSize</span><span class="p">,</span> <span class="n">overlapFac</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hanning</span><span class="p">):</span>
+    <span class="n">win</span> <span class="o">=</span> <span class="n">window</span><span class="p">(</span><span class="n">frameSize</span><span class="p">)</span>
+    <span class="n">hopSize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frameSize</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">overlapFac</span> <span class="o">*</span> <span class="n">frameSize</span><span class="p">))</span>
+
+    <span class="c1"># zeros at beginning (thus center of 1st window should be for sample nr. 0)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">frameSize</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)),</span> <span class="n">sig</span><span class="p">)</span>
+    <span class="c1"># cols for windowing</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span> <span class="o">-</span> <span class="n">frameSize</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">hopSize</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c1"># zeros at end (thus samples can be fully covered by frames)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">frameSize</span><span class="p">))</span>
+
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">stride_tricks</span><span class="o">.</span><span class="n">as_strided</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">frameSize</span><span class="p">),</span>
+                                      <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">strides</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">hopSize</span><span class="p">,</span>
+                                      <span class="n">samples</span><span class="o">.</span><span class="n">strides</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">frames</span> <span class="o">*=</span> <span class="n">win</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+
+<span class="sd">""" scale frequency axis logarithmically """</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">logscale_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">44100</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">20.</span><span class="p">):</span>
+    <span class="n">timebins</span><span class="p">,</span> <span class="n">freqbins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">freqbins</span><span class="p">)</span> <span class="o">**</span> <span class="n">factor</span>
+    <span class="n">scale</span> <span class="o">*=</span> <span class="p">(</span><span class="n">freqbins</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">scale</span><span class="p">))</span>
+
+    <span class="c1"># create spectrogram with new freq bins</span>
+    <span class="n">newspec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">timebins</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">newspec</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">spec</span><span class="p">[:,</span><span class="n">scale</span><span class="p">[</span><span class="n">i</span><span class="p">]:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">newspec</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">spec</span><span class="p">[:,</span><span class="n">scale</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">scale</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># list center freq of bins</span>
+    <span class="n">allfreqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">freqbins</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="n">sr</span><span class="p">)[:</span><span class="n">freqbins</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">freqs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">freqs</span> <span class="o">+=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">allfreqs</span><span class="p">[</span><span class="n">scale</span><span class="p">[</span><span class="n">i</span><span class="p">]:])]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">freqs</span> <span class="o">+=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">allfreqs</span><span class="p">[</span><span class="n">scale</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">scale</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])]</span>
+
+    <span class="k">return</span> <span class="n">newspec</span><span class="p">,</span> <span class="n">freqs</span>
+
+<span class="sd">""" plot spectrogram"""</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plotstft</span><span class="p">(</span><span class="n">audiopath</span><span class="p">,</span> <span class="n">binsize</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">10</span><span class="p">,</span> <span class="n">plotpath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s2">"jet"</span><span class="p">):</span>
+    <span class="n">samplerate</span><span class="p">,</span> <span class="n">samples</span> <span class="o">=</span> <span class="n">wav</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">audiopath</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">stft</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">binsize</span><span class="p">)</span>
+
+    <span class="n">sshow</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="n">logscale_spec</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">samplerate</span><span class="p">)</span>
+    <span class="n">ims</span> <span class="o">=</span> <span class="mf">20.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sshow</span><span class="p">)</span><span class="o">/</span><span class="mf">10e-6</span><span class="p">)</span> <span class="c1"># amplitude to decibel</span>
+
+    <span class="n">timebins</span><span class="p">,</span> <span class="n">freqbins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">ims</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">ims</span><span class="p">),</span> <span class="n">origin</span><span class="o">=</span><span class="s2">"lower"</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">colormap</span><span class="p">,</span>
+               <span class="n">interpolation</span><span class="o">=</span><span class="s2">"none"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"time (s)"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"frequency (hz)"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">timebins</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">freqbins</span><span class="p">])</span>
+
+    <span class="n">xlocs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">timebins</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">xlocs</span><span class="p">,</span> <span class="p">[</span><span class="s2">"</span><span class="si">%.02f</span><span class="s2">"</span> <span class="o">%</span> <span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span>
+                       <span class="p">((</span><span class="n">xlocs</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span><span class="o">/</span><span class="n">timebins</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">binsize</span><span class="p">))</span><span class="o">/</span><span class="n">samplerate</span><span class="p">])</span>
+    <span class="n">ylocs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">freqbins</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">ylocs</span><span class="p">,</span> <span class="p">[</span><span class="s2">"</span><span class="si">%.02f</span><span class="s2">"</span> <span class="o">%</span> <span class="n">freq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ylocs</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">plotpath</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plotpath</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">"tight"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+
+<span class="n">plotstft</span><span class="p">(</span><span class="s2">"my_audio_file.wav"</span><span class="p">)</span>
+</pre></div>
+    </div>
+    
+
+</article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2025         <a href="mailto:frank_zalkow@web.de">Frank Zalkow</a>
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

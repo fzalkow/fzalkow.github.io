@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+ <url>
+  <loc>https://www.frank-zalkow.de/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/about-me/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/about-me/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/archive.html</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/categories/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/cl-mlep-machine-learning-with-common-lisp/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/cl-mlep-machine-learning-with-common-lisp/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/contact/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/contact/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/create-audio-spectrograms-with-python/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/create-audio-spectrograms-with-python/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/about-me/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/archive.html</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/categories/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/cl-mlep-machine-learning-with-common-lisp/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/contact/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/create-audio-spectrograms-with-python/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/galleries/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/publications/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/teaching/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/the-wigner-ville-distribution-with-python/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/twelve-tone-row-table-with-common-lisp-lilypond-and-latex/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/de/waveletgui/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/galleries/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/listings/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/publications/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/publications/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/teaching/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/teaching/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/the-wigner-ville-distribution-with-python/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/the-wigner-ville-distribution-with-python/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/twelve-tone-row-table-with-common-lisp-lilypond-and-latex/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/twelve-tone-row-table-with-common-lisp-lilypond-and-latex/" />
+ </url>
+ <url>
+  <loc>https://www.frank-zalkow.de/waveletgui/</loc>
+  <lastmod>2025-11-06T14:02:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="de" href="https://www.frank-zalkow.de/de/waveletgui/" />
+ </url>
+</urlset>
