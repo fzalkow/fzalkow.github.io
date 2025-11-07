@@ -72,3 +72,7 @@ body {
     grid-template-columns: 160px 1fr;
   }
 }
+
+div.btn-group {
+  margin-right: 10px;
+}
