@@ -17,7 +17,7 @@
       </div>
       <div class="hero-content">
         <h1>Dr.-Ing. Frank Zalkow</h1>
-        <p>Senior Scientist im Bereich Sprachsynthese am Fraunhofer IIS. Interessiert an Deep Learning für Musik und Sprache, angewandter Forschung und deren Umsetzung in innovativen Produkten.</p>
+        <p>Senior Applied Scientist bei Microsoft. Interessiert an Deep Learning für Musik und Sprache, angewandter Forschung und deren Umsetzung in innovativen Produkten.</p>
         <div class="cta">
             <a href="/de/about-me">Über mich</a>
             <a href="/de/publications">Publikationen</a>

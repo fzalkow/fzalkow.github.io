@@ -17,7 +17,7 @@
       </div>
       <div class="hero-content">
         <h1>Dr.-Ing. Frank Zalkow</h1>
-        <p>Senior Scientist working on speech synthesis at Fraunhofer IIS. Interested in deep learning for music and speech, applied research, and deploying this all in innovative products.</p>
+        <p>Senior Applied Scientist at Microsoft. Interested in deep learning for music and speech, applied research, and deploying this all in innovative products.</p>
         <div class="cta">
             <a href="/about-me">About Me</a>
             <a href="/publications">Publications</a>
